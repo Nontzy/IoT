@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Sign Up</title>
+    <link rel="icon" href="../res/icons/fire-flames.png" type="image/png">
+    <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-header">
+            <a href="admin_dashboard.php" class="logo-header">
+                 <img src="../res/icons/fire-flames.png" alt="fire-flames Icon" class="logo" type="image/png">
+             </a>
+             <h1>IOT-based Fire Detection System</h1>
+         </div>
+
+        <nav>
+            <ul>
+                <li><a href="admin_dashboard.php">Home</a></li>
+                <li><a href="admin_profile.php">Profile</a></li>
+                <li><a href="admin_logout.php" class="logout-link">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Admin Sign Up</h2>
+        <div id="error-container" class="error-message"></div>
+
+        <form id="signup-form" action="admin_signup.php" method="post">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+            
+            <button type="submit">Sign Up</button>
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            const errorContainer = document.getElementById('error-container');
+            errorContainer.innerHTML = ""; // Clear previous errors
+
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+
+            let errors = [];
+
+            // Validate email format
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                errors.push("Invalid email format.");
+            }
+
+            // Validate phone number (basic validation)
+            if (!/^\d{11}$/.test(phone)) {
+                errors.push("Phone number must be 11 digits.");
+            }
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                errors.push("Passwords do not match.");
+            }
+
+            // If there are errors, prevent form submission and display them
+            if (errors.length > 0) {
+                event.preventDefault(); // Stop form submission
+                errorContainer.innerHTML = errors.join("<br>"); // Display errors
+            }
+        });
+    </script>
+</body>
+</html>

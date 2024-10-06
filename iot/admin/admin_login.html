@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="icon" href="../res/icons/fire-flames.png" type="image/png">
+    <link rel="stylesheet" href="form.css">
+    <style>
+        .error-message {
+            color: red;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Fire Detection System - Admin</h1>
+    </header>
+    <main>
+        <h2>Admin Login</h2>
+        <div id="error-container" class="error-message"></div>
+
+        <form id="login-form" action="admin_login.php" method="post">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            const errorContainer = document.getElementById('error-container');
+            errorContainer.innerHTML = ""; // Clear previous errors
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            let errors = [];
+
+            // Validate email format
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                errors.push("Invalid email format.");
+            }
+
+            // Validate password (ensure it's not empty)
+            if (password.length === 0) {
+                errors.push("Password cannot be empty.");
+            }
+
+            // If there are errors, prevent form submission and display them
+            if (errors.length > 0) {
+                event.preventDefault(); // Stop form submission
+                errorContainer.innerHTML = errors.join("<br>"); // Display errors
+            }
+        });
+    </script>
+</body>
+</html>
